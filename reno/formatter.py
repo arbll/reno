@@ -29,9 +29,7 @@ def format_report(loader, config, versions_to_include, title=None,
                   show_source=True):
     report = []
     if title:
-        report.append('=' * len(title))
-        report.append(title)
-        report.append('=' * len(title))
+        report.append("# {}".format(title))
         report.append('')
 
     # Read all of the notes files.
@@ -42,8 +40,7 @@ def format_report(loader, config, versions_to_include, title=None,
             file_contents[filename] = body
 
     for version in versions_to_include:
-        report.append(version)
-        report.append('=' * len(version))
+        report.append("## {}".format(version))
         report.append('')
 
         # Add the preludes.
@@ -52,8 +49,7 @@ def format_report(loader, config, versions_to_include, title=None,
         notefiles_with_prelude = [(n, sha) for n, sha in notefiles
                                   if prelude_name in file_contents[n]]
         if notefiles_with_prelude:
-            report.append(prelude_name.replace('_', ' ').title())
-            report.append('-' * len(prelude_name))
+            report.append("### {}".format(prelude_name.replace('_', ' ').title()))
             report.append('')
 
         for n, sha in notefiles_with_prelude:
@@ -71,8 +67,7 @@ def format_report(loader, config, versions_to_include, title=None,
                 for n in file_contents[fn].get(section_name, [])
             ]
             if notes:
-                report.append(section_title)
-                report.append('-' * len(section_title))
+                report.append("### {}".format(section_title))
                 report.append('')
                 for n, fn, sha in notes:
                     if show_source:
